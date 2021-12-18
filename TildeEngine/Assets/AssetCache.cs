@@ -5,8 +5,15 @@ namespace TildeEngine.Assets;
 
 public class AssetCache
 {
-    private string AssetPath { get; }
+    private string AssetPath { get; set; }
     private ConcurrentDictionary<string, RawAsset> raws = new();
+
+    public AssetCache(string assetPath)
+    {
+        AssetPath = assetPath;
+    }
+
+    public void UpdateAssetPath(string path) => AssetPath = path;
 
     public void LoadAsset(string relativePath)
     {
@@ -30,5 +37,10 @@ public class AssetCache
         var raw = new RawAsset(Encoding.UTF8, File.ReadAllBytes(rawAssetPath));
 
         return creator.Invoke(raw);
+    }
+    
+    public TAsset? FetchAsset<TAsset>(Guid guid, Func<RawAsset, TAsset> creator) where TAsset : GameAsset
+    {
+        return raws.TryGetValue(guid.ToString(), out var raw) ? creator.Invoke(raw) : null;
     }
 }
