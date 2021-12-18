@@ -27,16 +27,9 @@ public class AssetCache
         raws.AddOrUpdate(Guid.NewGuid().ToString().ToUpper(), s => raw, (_, _) => raw);
     }
 
-    public TAsset? FetchAsset<TAsset>(string path, Func<RawAsset, TAsset> creator) where TAsset : GameAsset
+    public void UnloadAsset(Guid guid)
     {
-        var rawAssetPath = Path.Join(AssetPath, path);
-
-        if (!File.Exists(rawAssetPath))
-            return null;
-
-        var raw = new RawAsset(Encoding.UTF8, File.ReadAllBytes(rawAssetPath));
-
-        return creator.Invoke(raw);
+        raws.TryRemove(guid.ToString(), out _);
     }
     
     public TAsset? FetchAsset<TAsset>(Guid guid, Func<RawAsset, TAsset> creator) where TAsset : GameAsset
