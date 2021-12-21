@@ -20,8 +20,10 @@ public class Animator<TProperty>
 
         Progress = new Progress<AnimationStatus<TProperty>>();
     }
+    
+    public IEnumerable<TProperty> GetPropertySequence() => Values;
 
-    public async void Start()
+    public void Start()
     {
         Restart();
     }
@@ -40,17 +42,33 @@ public class Animator<TProperty>
     {
         IsAnimating = true;
 
-        await Animate();
+        Animate();
     }
     
     public async Task RestartAsync()
     {
         IsAnimating = true;
         
-        await Animate();
+        await AnimateAsync();
     }
 
-    private async Task Animate()
+    private void Animate()
+    {
+        for (; Index < Values.LongLength; Index++)
+        {
+            if (!IsAnimating)
+                return;
+            
+            var value = Values[Index];
+                        
+            Property.Value = value;
+            InterfaceProgress.Report(CreateStatus());
+
+            Thread.Sleep(TimeSpan.FromSeconds(Interval));
+        }
+    }
+
+    private async Task AnimateAsync()
     {
         for (; Index < Values.LongLength; Index++)
         {

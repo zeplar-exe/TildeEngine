@@ -8,6 +8,7 @@ public class DoubleProperty : ObjectProperty<double>
     {
         
     }
+    
     public override Animator<double> Animate(double result, AnimationSettings settings)
     {
         var values = new List<double>();

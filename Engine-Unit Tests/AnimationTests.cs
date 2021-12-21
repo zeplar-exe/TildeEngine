@@ -5,6 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using TildeEngine;
 using TildeEngine.ObjectProperties.Animation;
+using TildeEngine.Time;
 
 namespace Engine_Unit_Tests;
 

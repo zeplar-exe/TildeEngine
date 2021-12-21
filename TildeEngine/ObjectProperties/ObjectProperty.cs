@@ -26,4 +26,6 @@ public abstract class ObjectProperty<TValue>
     }
 
     public abstract Animator<TValue> Animate(TValue result, AnimationSettings settings);
+
+    public static implicit operator TValue?(ObjectProperty<TValue> property) => property.Value;
 }
