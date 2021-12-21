@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <Folder Include="Graphics" />
+      <Folder Include="Input" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CSCore" Version="1.2.1.2" />
     </ItemGroup>
 
 </Project>
