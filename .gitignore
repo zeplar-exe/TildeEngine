@@ -1,4 +1,5 @@
 obj/
 bin/
+*.DotSettings
 *.user
 .idea

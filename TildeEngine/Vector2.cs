@@ -1,6 +1,4 @@
-using SFML.System;
-
-namespace TildeEngine.ObjectProperties;
+namespace TildeEngine;
 
 public struct Vector2 : IEquatable<Vector2>
 {

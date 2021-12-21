@@ -1,4 +1,4 @@
-namespace TildeEngine.ObjectProperties;
+namespace TildeEngine;
 
 public struct Vector2Int : IEquatable<Vector2Int>
 {
