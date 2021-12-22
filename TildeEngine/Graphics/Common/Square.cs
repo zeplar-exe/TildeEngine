@@ -7,22 +7,14 @@ public class Square : Shape
         
     }
 
-    public override IEnumerable<float> CreateVertices()
+    public override IEnumerable<Vector2> CreateVertices()
     {
-        yield return Position.X;
-        yield return Position.Y;
-        yield return 0f;
+        yield return new Vector2(Position.X, Position.Y); // Bottom left
 
-        yield return Position.X + Size.X;
-        yield return Position.Y;
-        yield return 0f;
+        yield return new Vector2(Position.X, Position.Y + Size.Y); // Bottom right
         
-        yield return Position.X;
-        yield return Position.Y + Size.Y;
-        yield return 0f;
+        yield return new Vector2(Position.X + Size.X, Position.Y + Size.Y); // Top right
         
-        yield return Position.X + Size.X;
-        yield return Position.Y + Size.Y;
-        yield return 0f;
+        yield return new Vector2(Position.X + Size.X, Position.Y); // Top left
     }
 }

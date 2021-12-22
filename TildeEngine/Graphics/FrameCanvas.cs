@@ -16,13 +16,20 @@ public class FrameCanvas
 
     public void DrawShape(Shape shape)
     {
-        foreach (var vertex in shape.CreateVertices())
+        foreach (var coordinate in shape.CreateVertices())
         {
-            if (vertex == 0)
-                Vertices.Add(vertex);
-            else
-                Vertices.Add(NormalizedDeviceCoordinateDivisor / vertex);
+            AddVertex(coordinate.X);
+            AddVertex(coordinate.Y);
+            AddVertex(0); // 2D only, Z axis is unnecessary
         }
+    }
+
+    private void AddVertex(float vertex)
+    {
+        if (vertex == 0)
+            Vertices.Add(vertex);
+        else
+            Vertices.Add(NormalizedDeviceCoordinateDivisor / vertex);
     }
 
     public void Clear()

@@ -1,43 +1,71 @@
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using TildeEngine.Game;
 
 namespace TildeEngine.Input;
 
-public static class InputFramework
+public class InputFramework : GameController
 {
-    private static HashSet<Keys> PreviousFrameBuffer { get; }
-    private static HashSet<Keys> CurrentFrameBuffer { get; }
+    private HashSet<KeyState> PreviousFrameBuffer { get; }
+    private HashSet<KeyState> CurrentFrameBuffer { get; }
 
-    public static event EventHandler<Keys>? KeyPressed;
-    public static event EventHandler<Keys>? KeyHeld;
-    public static event EventHandler<Keys>? KeyReleased;
+    public event EventHandler<Keys>? KeyPressed;
+    public event EventHandler<Keys>? KeyHeld;
+    public event EventHandler<Keys>? KeyReleased;
 
-    static InputFramework()
+    internal InputFramework()
     {
-        PreviousFrameBuffer = new HashSet<Keys>();
-        CurrentFrameBuffer = new HashSet<Keys>();
+        PreviousFrameBuffer = new HashSet<KeyState>();
+        CurrentFrameBuffer = new HashSet<KeyState>();
     }
 
-    public static bool KeyIsPressed(Keys key)
+    public override void OnInput(KeyState key)
+    {
+        CurrentFrameBuffer.Add(key);
+        
+        base.OnInput(key);
+    }
+
+    public override void OnPreRender()
+    {
+        PreviousFrameBuffer.Clear();
+
+        foreach (var key in CurrentFrameBuffer)
+            PreviousFrameBuffer.Add(key);
+        
+        CurrentFrameBuffer.Clear();
+        
+        base.OnPreRender();
+    }
+
+    public bool KeyIsPressed(Keys key)
     {
         return GetKeyState(key).Pressed;
     }
 
-    public static bool KeyIsHeld(Keys key)
+    public bool KeyIsHeld(Keys key)
     {
         return GetKeyState(key).Held;
     }
 
-    public static bool KeyIsReleased(Keys key)
+    public bool KeyIsReleased(Keys key)
     {
         return GetKeyState(key).Released;
     }
 
-    public static KeyState GetKeyState(Keys key)
+    public KeyState GetKeyState(Keys key)
     {
-        return new KeyState(key,
-            CurrentFrameBuffer.Contains(key) && !PreviousFrameBuffer.Contains(key),
-            CurrentFrameBuffer.Contains(key) && PreviousFrameBuffer.Contains(key),
-            !CurrentFrameBuffer.Contains(key) && PreviousFrameBuffer.Contains(key));
+        var currentContains = CurrentFrameBuffer.Any(k => k.Key == key); 
+        var previousContains = PreviousFrameBuffer.Any(k => k.Key == key); 
+        
+        return new KeyState(key, 
+            currentContains && !previousContains,
+            currentContains && previousContains,
+            !currentContains && previousContains);
+    }
+
+    public override bool IsLocked()
+    {
+        return false;
     }
 }
 

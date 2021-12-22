@@ -71,7 +71,7 @@ public class AppWindow : GameWindow
         
         Shader.Use();
         
-        GL.DrawArrays(PrimitiveType.Lines, 0, 12);
+        GL.DrawArrays(PrimitiveType.TriangleFan, 0, 12);
         
         GL.DisableVertexAttribArray(0);
 

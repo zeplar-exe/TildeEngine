@@ -11,5 +11,5 @@ public abstract class Shape
         Size = size;
     }
 
-    public abstract IEnumerable<float> CreateVertices();
+    public abstract IEnumerable<Vector2> CreateVertices();
 }

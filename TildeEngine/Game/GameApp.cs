@@ -3,6 +3,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using TildeEngine.Game.World.Common;
+using TildeEngine.Input;
 using TildeEngine.Scenes;
 
 namespace TildeEngine.Game;
@@ -13,6 +14,7 @@ public class GameApp : IDisposable
     private List<GameController> Controllers { get; }
     
     public event EventHandler? WindowClosed;
+    public InputFramework InputFramework;
     
     public GameApp()
     {
@@ -26,15 +28,18 @@ public class GameApp : IDisposable
         Window.Scene.Drawables.Add(new ColoredTile(new Vector2(0, 0), Color.Aqua));
 
         Controllers = new List<GameController>();
+        InputFramework = new InputFramework();
+        
+        HookController(InputFramework);
     }
     
     /// <summary>
-    /// Hook a new game controller to the update loop.
+    /// Hook a game controller to the update loop.
     /// </summary>
     /// <param name="controller">The game controller to be hooked.</param>
     public void HookController(GameController controller)
     {
-        Controllers.Add(controller);
+        Controllers.Add(controller); // TODO: Call GameController methods
     }
     
     /// <summary>
