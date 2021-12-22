@@ -1,6 +1,6 @@
 namespace TildeEngine.ObserverPattern;
 
-public static class Observer
+internal static class Observer
 {
     public static Queue<(Enum, object?)> LogBuffer { get; } = new();
 

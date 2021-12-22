@@ -7,12 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Graphics" />
-      <Folder Include="Input" />
+      <PackageReference Include="CSCore" Version="1.2.1.2" />
+      <PackageReference Include="OpenTK" Version="4.6.7" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CSCore" Version="1.2.1.2" />
+      <None Update="OpenTK\shader.frag">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="OpenTK\shader.vert">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

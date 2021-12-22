@@ -18,7 +18,7 @@ public abstract class ObjectProperty<TValue>
         }
     }
 
-    public event EventHandler<TValue>? ValueChanged;
+    public event EventHandler<TValue?>? ValueChanged;
 
     protected ObjectProperty(TValue value)
     {

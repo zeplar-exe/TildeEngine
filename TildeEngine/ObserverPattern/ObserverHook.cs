@@ -4,7 +4,7 @@ public class ObserverHook
 {
     private Observer.ObserverEventHandler Action { get; }
 
-    public ObserverHook(Observer.ObserverEventHandler action)
+    internal ObserverHook(Observer.ObserverEventHandler action)
     {
         Action = action;
     }
