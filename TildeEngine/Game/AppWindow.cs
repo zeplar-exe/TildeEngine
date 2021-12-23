@@ -1,7 +1,4 @@
-using System.ComponentModel;
-using System.Globalization;
 using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using TildeEngine.Graphics;
@@ -16,9 +13,24 @@ public class AppWindow : GameWindow
 
     private int VertexBufferObject { get; set; }
     private int VertexArrayObject { get; set; }
-    
-    public Scene? Scene { get; set; }
-    
+
+    private Scene? b_scene;
+
+    public Scene? Scene
+    {
+        get => b_scene;
+        set
+        {
+            if (b_scene == value)
+                return;
+            
+            SceneChanged?.Invoke(this, b_scene, b_scene = value);
+        }
+    }
+
+    public delegate void SceneChangedHandler(AppWindow window, Scene? old, Scene? @new);
+    public event SceneChangedHandler? SceneChanged; 
+
     internal AppWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) :
         base(gameWindowSettings, nativeWindowSettings)
     {
@@ -52,7 +64,7 @@ public class AppWindow : GameWindow
     {
         if (Scene == null)
             return;
-        
+
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         var canvas = new FrameCanvas();

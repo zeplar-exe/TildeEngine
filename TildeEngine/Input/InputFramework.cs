@@ -25,7 +25,7 @@ public class InputFramework : GameController
         base.OnInput(key);
     }
 
-    public override void OnPreRender()
+    public override void OnPreRender(double delta)
     {
         PreviousFrameBuffer.Clear();
 
@@ -34,7 +34,7 @@ public class InputFramework : GameController
         
         CurrentFrameBuffer.Clear();
         
-        base.OnPreRender();
+        base.OnPreRender(delta);
     }
 
     public bool KeyIsPressed(Keys key)
@@ -75,7 +75,7 @@ public readonly struct KeyState
     public bool Pressed { get; }
     public bool Held { get; }
     public bool Released { get; }
-    
+
     public KeyState(Keys key, bool pressed, bool held, bool released)
     {
         Key = key;

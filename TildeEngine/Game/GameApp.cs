@@ -32,14 +32,28 @@ public class GameApp : IDisposable
         
         HookController(InputFramework);
     }
-    
+
     /// <summary>
     /// Hook a game controller to the update loop.
     /// </summary>
     /// <param name="controller">The game controller to be hooked.</param>
     public void HookController(GameController controller)
     {
-        Controllers.Add(controller); // TODO: Call GameController methods
+        Controllers.Add(controller);
+        
+        InitializeControllerEventHandlers(controller);
+    }
+    
+    private void InitializeControllerEventHandlers(GameController controller)
+    {
+        Window.RenderFrame += e => controller.OnRender(e.Time);
+        Window.KeyDown += e => controller.OnInput(new KeyState(e.Key, true, false, false));
+        Window.KeyUp += e => controller.OnInput(new KeyState(e.Key, false, false, true));
+        Window.SceneChanged += (_, old, @new) => controller.OnSceneChange(old, @new);
+        Window.Closing += _ => controller.OnGameClosing();
+        
+        // TODO: Handle exceptions
+        // TODO: Handle control keys in input
     }
     
     /// <summary>
@@ -49,6 +63,9 @@ public class GameApp : IDisposable
     public void Start(CloseHandler closeType)
     {
         Window.Run();
+        
+        foreach (var controller in Controllers)
+            controller.OnStart();
 
         switch (closeType)
         {

@@ -1,4 +1,3 @@
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using TildeEngine.Input;
 using TildeEngine.Scenes;
 
@@ -15,11 +14,11 @@ public abstract class GameController : IDisposable
     /// <summary>
     /// Called after scene/frame rendering is completed.
     /// </summary>
-    public virtual void OnRender() { }
+    public virtual void OnRender(double delta) { }
     /// <summary>
     /// Called just before the scene/frame is rendered.
     /// </summary>
-    public virtual void OnPreRender() { }
+    public virtual void OnPreRender(double delta) { }
     /// <summary>
     /// Called when input is caught and rerouted
     /// </summary>
@@ -35,7 +34,7 @@ public abstract class GameController : IDisposable
     /// </summary>
     /// <param name="old">The previous scene.</param>
     /// <param name="new">The new scene.</param>
-    public virtual void OnSceneChange(Scene old, Scene @new) { }
+    public virtual void OnSceneChange(Scene? old, Scene? @new) { }
     /// <summary>
     /// Called just before all assets are unloaded and the application closes.
     /// </summary>
