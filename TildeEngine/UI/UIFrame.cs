@@ -5,9 +5,8 @@ namespace TildeEngine.UI;
 
 public class UIFrame : UIElement, IDrawableContainer<UIElement>
 {
-    private List<UIElement> b_elements { get; }
+    private readonly List<UIElement> b_elements;
     
-    public Vector2 Position { get; }
     public IEnumerable<UIElement> Drawables => b_elements;
 
     public override Rect Bounds
@@ -25,7 +24,6 @@ public class UIFrame : UIElement, IDrawableContainer<UIElement>
 
     public UIFrame(Vector2 position) : base(position)
     {
-        Position = position;
         b_elements = new List<UIElement>();
     }
     

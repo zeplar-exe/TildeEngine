@@ -2,21 +2,22 @@ using TildeEngine.ObjectProperties.Animation;
 
 namespace TildeEngine.ObjectProperties;
 
-public class DoubleProperty : ObjectProperty<double>
+public class IntegerProperty : ObjectProperty<int>
 {
-    public DoubleProperty(double value) : base(value)
+    public IntegerProperty(int value) : base(value)
     {
         
     }
-    
-    public override Animator<double> Animate(double result, AnimationSettings settings)
+
+    public override Animator<int> Animate(int result, AnimationSettings settings)
     {
-        var values = new List<double>();
+        var values = new List<int>();
 
         switch (settings.Type)
         {
             case AnimationType.Linear:
             {
+                // TODO: Gotta get rid of this magic number (0.1)
                 var minAlpha = 0.1 * (1 / settings.Length.TotalSeconds);
                 var alpha = 0d;
 
@@ -25,13 +26,13 @@ public class DoubleProperty : ObjectProperty<double>
                     values.Add(Math2.Lerp(Value, result, alpha));
                 }
         
-                if (Math.Abs(values.Last() - result) > 0.0000000000000001)
+                if (values.Last() != result)
                     values.Add(result);
                 
                 break;
             }
         }
 
-        return new Animator<double>(this, values, settings.Length.TotalSeconds / values.Count);
+        return new Animator<int>(this, values, settings.Length.TotalSeconds / values.Count);
     }
 }
