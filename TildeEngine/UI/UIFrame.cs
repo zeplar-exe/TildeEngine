@@ -28,8 +28,9 @@ public class UIFrame : UIElement, IDrawableContainer<UIElement>
         Position = position;
         b_elements = new List<UIElement>();
     }
-
-    public void Add(UIElement element)
+    
+    // Collection initializer method
+    private void Add(UIElement element)
     {
         b_elements.Add(element);
     }
