@@ -9,27 +9,24 @@ public class Shader : IDisposable
 
     public Shader(string vertexPath, string fragmentPath)
     {
-        var vertexShader = 0;
-        var fragmentShader = 0;
-        
-        var vertexShaderSource = string.Empty;
+        string vertexShaderSource;
 
         using (var reader = new StreamReader(vertexPath, Encoding.UTF8))
         {
             vertexShaderSource = reader.ReadToEnd();
         }
 
-        var fragmentShaderSource = string.Empty;
+        string fragmentShaderSource;
 
         using (var reader = new StreamReader(fragmentPath, Encoding.UTF8))
         {
             fragmentShaderSource = reader.ReadToEnd();
         }
         
-        vertexShader = GL.CreateShader(ShaderType.VertexShader);
+        var vertexShader = GL.CreateShader(ShaderType.VertexShader);
         GL.ShaderSource(vertexShader, vertexShaderSource);
 
-        fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+        var fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
         GL.ShaderSource(fragmentShader, fragmentShaderSource);
         
         GL.CompileShader(vertexShader);
@@ -73,11 +70,12 @@ public class Shader : IDisposable
 
     public virtual void Dispose()
     {
-        if (disposedValue) 
-            return;
+        if (disposedValue)
+            throw new InvalidOperationException("Shader was already disposed.");
+        
+        disposedValue = true;
         
         GL.DeleteProgram(Handle);
-
-        disposedValue = true;
+        GC.SuppressFinalize(this);
     }
 }

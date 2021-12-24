@@ -14,7 +14,7 @@ public class GameApp : IDisposable
     private List<GameController> Controllers { get; }
     
     public event EventHandler? WindowClosed;
-    public InputFramework InputFramework;
+    public InputFramework InputFramework { get; }
     
     public GameApp()
     {
@@ -25,7 +25,7 @@ public class GameApp : IDisposable
         });
         
         Window.Scene = new Scene(new StaticCamera());
-        Window.Scene.Drawables.Add(new ColoredTile(new Vector2(0, 0), Color.Aqua));
+        Window.Scene.AddDrawable(new ColoredTile(new Vector2(0, 0), Color.Aqua));
 
         Controllers = new List<GameController>();
         InputFramework = new InputFramework();

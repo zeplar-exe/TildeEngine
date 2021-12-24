@@ -34,12 +34,11 @@ public class AppWindow : GameWindow
     internal AppWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) :
         base(gameWindowSettings, nativeWindowSettings)
     {
-        
+        Shader = new Shader("OpenTK/shader.vert", "OpenTK/shader.frag");
     }
     
     protected override void OnLoad()
     {
-        Shader = new Shader("OpenTK/shader.vert", "OpenTK/shader.frag");
         VertexBufferObject = GL.GenBuffer();
         VertexArrayObject = GL.GenVertexArray();
         
