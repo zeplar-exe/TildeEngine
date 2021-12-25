@@ -13,8 +13,10 @@ public class UIFrame : UIElement, IDrawableContainer<UIElement>
     {
         get
         {
-            var bottomLeft = new Vector2(Drawables.Min(e => e.Position.X), Drawables.Min(e => e.Position.Y));
-            var topRight = new Vector2(Drawables.Max(e => e.Position.X), Drawables.Max(e => e.Position.Y));
+            var bottomLeft = new Vector2(
+                Drawables.Min(e => e.Position.Value.X), Drawables.Min(e => e.Position.Value.Y));
+            var topRight = new Vector2(
+                Drawables.Max(e => e.Position.Value.X), Drawables.Max(e => e.Position.Value.Y));
             var points = new[] { bottomLeft, topRight };
             
             return new Rect(bottomLeft, 
@@ -28,7 +30,7 @@ public class UIFrame : UIElement, IDrawableContainer<UIElement>
     }
     
     // Collection initializer method
-    private void Add(UIElement element)
+    public void Add(UIElement element)
     {
         b_elements.Add(element);
     }

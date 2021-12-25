@@ -16,6 +16,6 @@ public class ColoredTile : Tile
     
     public override void Draw(FrameCanvas canvas)
     {
-        canvas.DrawShape(new Square(Position, new Vector2(1, 1)));
+        canvas.DrawShape(new Square(Position, new Vector2(30, 30)));
     }
 }

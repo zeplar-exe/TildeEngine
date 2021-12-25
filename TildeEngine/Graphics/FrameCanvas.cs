@@ -6,10 +6,13 @@ public class FrameCanvas
 {
     private const float NormalizedDeviceCoordinateDivisor = 1f;
     private List<float> Vertices { get; }
+    
+    public float Scale { get; }
 
-    public FrameCanvas()
+    public FrameCanvas(float scale)
     {
         Vertices = new List<float>();
+        Scale = scale;
     }
 
     public IEnumerable<float> PullVertices() => Vertices;
@@ -18,18 +21,15 @@ public class FrameCanvas
     {
         foreach (var coordinate in shape.CreateVertices())
         {
-            AddVertex(coordinate.X);
-            AddVertex(coordinate.Y);
+            AddVertex(coordinate.X / Scale);
+            AddVertex(coordinate.Y / Scale);
             AddVertex(0); // 2D only, Z axis is unnecessary
         }
     }
 
     private void AddVertex(float vertex)
     {
-        if (vertex == 0)
-            Vertices.Add(vertex);
-        else
-            Vertices.Add(NormalizedDeviceCoordinateDivisor / vertex);
+        Vertices.Add(vertex);
     }
 
     public void Clear()

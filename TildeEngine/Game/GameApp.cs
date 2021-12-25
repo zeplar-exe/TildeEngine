@@ -5,6 +5,9 @@ using OpenTK.Windowing.Desktop;
 using TildeEngine.Game.World.Common;
 using TildeEngine.Input;
 using TildeEngine.Scenes;
+using TildeEngine.UI;
+using TildeEngine.UI.Common;
+using Rectangle = TildeEngine.UI.Common.Rectangle;
 
 namespace TildeEngine.Game;
 
@@ -21,12 +24,16 @@ public class GameApp : IDisposable
         Window = new AppWindow(GameWindowSettings.Default, new NativeWindowSettings
         {
             API = ContextAPI.OpenGL,
-            Size = new Vector2i(800, 500)
+            Size = new Vector2i(800, 500),
         });
         
         Window.Scene = new Scene(new StaticCamera());
         Window.Scene.AddDrawable(new ColoredTile(new Vector2(0, 0), Color.Aqua));
-
+        Window.Scene.AddDrawable(new UIFrame(new Vector2(-100, -100))
+        {
+            new Rectangle(new Vector2(-100, -100), new Vector2(50, 50))
+        });
+        
         Controllers = new List<GameController>();
         InputFramework = new InputFramework();
         
@@ -47,12 +54,12 @@ public class GameApp : IDisposable
     private void InitializeControllerEventHandlers(GameController controller)
     {
         Window.RenderFrame += e => controller.OnRender(e.Time);
+        Window.OnPreRender += (_, _) => controller.OnPreRender();
         Window.KeyDown += e => controller.OnInput(new KeyState(e.Key, true, false, false));
         Window.KeyUp += e => controller.OnInput(new KeyState(e.Key, false, false, true));
         Window.SceneChanged += (_, old, @new) => controller.OnSceneChange(old, @new);
         Window.Closing += _ => controller.OnGameClosing();
         
-        // TODO: Handle exceptions
         // TODO: Handle control keys in input
     }
     
@@ -62,8 +69,6 @@ public class GameApp : IDisposable
     /// <param name="closeType">Defines how the application should act once the window closes.</param>
     public void Start(CloseHandler closeType)
     {
-        Window.Run();
-        
         foreach (var controller in Controllers)
             controller.OnStart();
 
@@ -75,6 +80,20 @@ public class GameApp : IDisposable
             case CloseHandler.Kill:
                 Window.Closed += Kill;
                 break;
+        }
+
+        try
+        {
+            Window.Run();
+        }
+        catch (Exception e)
+        {
+            foreach (var controller in Controllers)
+            {
+                controller.OnException(e);
+            }
+            
+            throw;
         }
     }
 

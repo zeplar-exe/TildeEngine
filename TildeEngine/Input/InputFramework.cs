@@ -25,7 +25,7 @@ public class InputFramework : GameController
         base.OnInput(key);
     }
 
-    public override void OnPreRender(double delta)
+    public override void OnPreRender()
     {
         PreviousFrameBuffer.Clear();
 
@@ -34,7 +34,7 @@ public class InputFramework : GameController
         
         CurrentFrameBuffer.Clear();
         
-        base.OnPreRender(delta);
+        base.OnPreRender();
     }
 
     public bool KeyIsPressed(Keys key)

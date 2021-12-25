@@ -23,13 +23,17 @@ public class AppWindow : GameWindow
         {
             if (b_scene == value)
                 return;
+
+            SceneChanged?.Invoke(this, b_scene, value);
             
-            SceneChanged?.Invoke(this, b_scene, b_scene = value);
+            b_scene = value;
         }
     }
 
     public delegate void SceneChangedHandler(AppWindow window, Scene? old, Scene? @new);
-    public event SceneChangedHandler? SceneChanged; 
+    public event SceneChangedHandler? SceneChanged;
+
+    public event EventHandler? OnPreRender;
 
     internal AppWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) :
         base(gameWindowSettings, nativeWindowSettings)
@@ -67,7 +71,7 @@ public class AppWindow : GameWindow
 
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
-        var canvas = new FrameCanvas();
+        var canvas = new FrameCanvas(100f); // TODO: Make this customizable
 
         foreach (var drawable in Scene.Drawables)
         {
@@ -87,6 +91,7 @@ public class AppWindow : GameWindow
         
         GL.DisableVertexAttribArray(0);
 
+        OnPreRender?.Invoke(this, EventArgs.Empty);
         Context.SwapBuffers();
         base.OnRenderFrame(args);
     }

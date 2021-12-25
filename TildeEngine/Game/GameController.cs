@@ -18,7 +18,7 @@ public abstract class GameController : IDisposable
     /// <summary>
     /// Called just before the scene/frame is rendered.
     /// </summary>
-    public virtual void OnPreRender(double delta) { }
+    public virtual void OnPreRender() { }
     /// <summary>
     /// Called when input is caught and rerouted
     /// </summary>
