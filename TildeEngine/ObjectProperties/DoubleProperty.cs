@@ -4,6 +4,8 @@ namespace TildeEngine.ObjectProperties;
 
 public class DoubleProperty : ObjectProperty<double>
 {
+    private const double ComparisonTolerance = 0.0000000000000001d;
+    
     public DoubleProperty(double value) : base(value)
     {
         
@@ -11,6 +13,9 @@ public class DoubleProperty : ObjectProperty<double>
     
     public override Animator<double> Animate(double result, AnimationSettings settings)
     {
+        if (Math.Abs(Value - result) < ComparisonTolerance)
+            return CreateEmptyAnimator();
+        
         var values = new List<double>();
 
         switch (settings.Type)
@@ -25,7 +30,7 @@ public class DoubleProperty : ObjectProperty<double>
                     values.Add(Math2.Lerp(Value, result, alpha));
                 }
         
-                if (Math.Abs(values.Last() - result) > 0.0000000000000001)
+                if (Math.Abs(values.Last() - result) > ComparisonTolerance)
                     values.Add(result);
                 
                 break;

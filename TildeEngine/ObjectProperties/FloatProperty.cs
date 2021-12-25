@@ -4,6 +4,8 @@ namespace TildeEngine.ObjectProperties;
 
 public class FloatProperty : ObjectProperty<float>
 {
+    private const float ComparisonTolerance = 0.00000000001f;
+    
     public FloatProperty(float value) : base(value)
     {
         
@@ -11,6 +13,9 @@ public class FloatProperty : ObjectProperty<float>
 
     public override Animator<float> Animate(float result, AnimationSettings settings)
     {
+        if (Math.Abs(Value - result) < ComparisonTolerance)
+            return CreateEmptyAnimator();
+        
         var values = new List<float>();
 
         switch (settings.Type)
@@ -26,7 +31,7 @@ public class FloatProperty : ObjectProperty<float>
                     values.Add(Math2.Lerp(Value, result, alpha));
                 }
         
-                if (Math.Abs(values.Last() - result) > 0.00000000001)
+                if (Math.Abs(values.Last() - result) > ComparisonTolerance)
                     values.Add(result);
                 
                 break;

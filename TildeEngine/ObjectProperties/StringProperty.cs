@@ -10,16 +10,20 @@ public class StringProperty : ObjectProperty<string>
     }
 
     public override Animator<string> Animate(string result, AnimationSettings settings) 
-        // TODO: Maybe use ObjectPropertyMetadata instead 
+        // TODO: Maybe use ObjectPropertyMetadata for settings instead 
     {
-        var fixedValue = Value ?? string.Empty;
-        var values = new List<string>();
-
         if (result == null) 
             throw new ArgumentNullException(nameof(result));
+        
+        var fixedValue = Value ?? string.Empty;
 
+        if (fixedValue == result)
+            return CreateEmptyAnimator();
+        
         if (string.IsNullOrEmpty(fixedValue) && string.IsNullOrEmpty(result))
-            return new Animator<string>(this, Enumerable.Empty<string>(), settings.Length.TotalSeconds);
+            return CreateEmptyAnimator();
+        
+        var values = new List<string>();
 
         var valueIndex = 0;
 

@@ -27,5 +27,10 @@ public abstract class ObjectProperty<TValue>
 
     public abstract Animator<TValue> Animate(TValue result, AnimationSettings settings);
 
+    protected Animator<TValue> CreateEmptyAnimator()
+    {
+        return new Animator<TValue>(this, Enumerable.Empty<TValue>(), 0);
+    }
+
     public static implicit operator TValue?(ObjectProperty<TValue> property) => property.Value;
 }

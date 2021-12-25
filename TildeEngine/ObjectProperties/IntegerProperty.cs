@@ -11,6 +11,9 @@ public class IntegerProperty : ObjectProperty<int>
 
     public override Animator<int> Animate(int result, AnimationSettings settings)
     {
+        if (Value == result)
+            return CreateEmptyAnimator();
+        
         var values = new List<int>();
 
         switch (settings.Type)
