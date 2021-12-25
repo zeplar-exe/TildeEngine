@@ -2,9 +2,11 @@ namespace TildeEngine.Graphics.Common;
 
 public class Square : Shape
 {
-    public Square(Vector2 position, Vector2 size) : base(position, size)
+    public Vector2 Size { get; }
+    
+    public Square(Vector2 position, Vector2 size) : base(position)
     {
-        
+        Size = size;
     }
 
     public override IEnumerable<Vector2> CreateVertices()
