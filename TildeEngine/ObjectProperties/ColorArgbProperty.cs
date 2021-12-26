@@ -1,4 +1,4 @@
-using TildeEngine.Graphics;
+using TildeEngine.Graphics.Color;
 using TildeEngine.ObjectProperties.Animation;
 
 namespace TildeEngine.ObjectProperties;

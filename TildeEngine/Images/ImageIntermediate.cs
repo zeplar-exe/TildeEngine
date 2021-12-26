@@ -1,4 +1,4 @@
-using TildeEngine.Graphics;
+using TildeEngine.Graphics.Color;
 
 namespace TildeEngine.Images;
 

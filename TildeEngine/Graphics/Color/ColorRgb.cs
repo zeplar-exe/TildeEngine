@@ -1,4 +1,4 @@
-namespace TildeEngine.Graphics;
+namespace TildeEngine.Graphics.Color;
 
 public partial struct ColorRgb
 {

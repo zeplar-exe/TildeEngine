@@ -1,5 +1,3 @@
-using TildeEngine.Graphics.Common;
-
 namespace TildeEngine.Graphics;
 
 public sealed class GraphicsTriangle

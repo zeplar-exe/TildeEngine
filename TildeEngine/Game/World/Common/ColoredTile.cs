@@ -1,4 +1,5 @@
 using TildeEngine.Graphics;
+using TildeEngine.Graphics.Color;
 using TildeEngine.Graphics.Common;
 using TildeEngine.ObjectProperties;
 

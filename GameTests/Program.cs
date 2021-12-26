@@ -2,6 +2,7 @@
 using TildeEngine.Game;
 using TildeEngine.Game.World.Common;
 using TildeEngine.Graphics;
+using TildeEngine.Graphics.Color;
 using TildeEngine.Scenes;
 using TildeEngine.UI;
 using TildeEngine.UI.Common;
