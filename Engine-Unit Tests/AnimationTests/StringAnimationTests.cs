@@ -16,7 +16,7 @@ public class StringAnimationTests : AnimationTest
         var end = "Hello, world";
         
         var animator = new StringProperty(begin).Animate(end, new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
-        var interpolationValues = CreateProgressHandler(animator, Console.WriteLine);
+        var interpolationValues = CreateProgressHandler(animator);
         
         animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
 
@@ -27,7 +27,7 @@ public class StringAnimationTests : AnimationTest
     public void TestEmptyStringAnimation()
     {
         var animator = new StringProperty("").Animate("", new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
-        var interpolationValues = CreateProgressHandler(animator, Console.WriteLine);
+        var interpolationValues = CreateProgressHandler(animator);
         
         animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
 

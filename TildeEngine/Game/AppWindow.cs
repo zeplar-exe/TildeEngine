@@ -81,8 +81,6 @@ public class AppWindow : GameWindow
         }
 
         var vertices = canvas.PullVertices().ToArray();
-        Console.WriteLine(string.Join(", ", vertices));
-        Console.WriteLine(vertices.Length);
         
         GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StreamDraw);
         

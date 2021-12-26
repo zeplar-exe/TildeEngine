@@ -13,7 +13,7 @@ public class FloatAnimationTests : AnimationTest
     public void TestFloatAnimation()
     {
         var animator = new FloatProperty(1f).Animate(10f, new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
-        var interpolationValues = CreateProgressHandler(animator, Console.WriteLine);
+        var interpolationValues = CreateProgressHandler(animator);
         
         animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
         
