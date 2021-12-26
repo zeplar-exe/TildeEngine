@@ -30,10 +30,10 @@ public class AppWindow : GameWindow
         }
     }
 
-    public delegate void SceneChangedHandler(AppWindow window, Scene? old, Scene? @new);
-    public event SceneChangedHandler? SceneChanged;
+    internal delegate void SceneChangedHandler(AppWindow window, Scene? old, Scene? @new);
+    internal event SceneChangedHandler? SceneChanged;
 
-    public event EventHandler? OnPreRender;
+    internal event EventHandler? OnPreRender;
 
     internal AppWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) :
         base(gameWindowSettings, nativeWindowSettings)

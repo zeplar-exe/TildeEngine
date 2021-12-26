@@ -1,4 +1,3 @@
-using System.Drawing;
 using TildeEngine.Graphics;
 using TildeEngine.Graphics.Common;
 using TildeEngine.ObjectProperties;
@@ -7,11 +6,11 @@ namespace TildeEngine.Game.World.Common;
 
 public class ColoredTile : Tile
 {
-    public ColorProperty Color { get; }
+    public ColorArgbProperty Color { get; }
     
-    public ColoredTile(Vector2 position, Color color) : base(position)
+    public ColoredTile(Vector2 position, ColorArgb color) : base(position)
     {
-        Color = new ColorProperty(color);
+        Color = new ColorArgbProperty(color);
     }
     
     public override void Draw(FrameCanvas canvas)

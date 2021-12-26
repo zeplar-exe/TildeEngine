@@ -1,22 +1,16 @@
-using System.Drawing;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
-using TildeEngine.Game.World.Common;
 using TildeEngine.Input;
-using TildeEngine.Scenes;
-using TildeEngine.UI;
-using TildeEngine.UI.Common;
-using Rectangle = TildeEngine.UI.Common.Rectangle;
 
 namespace TildeEngine.Game;
 
 public class GameApp : IDisposable
 {
-    private AppWindow Window { get; }
     private List<GameController> Controllers { get; }
     
     public event EventHandler? WindowClosed;
+    public AppWindow Window { get; }
     public InputFramework InputFramework { get; }
     
     public GameApp()
@@ -26,14 +20,7 @@ public class GameApp : IDisposable
             API = ContextAPI.OpenGL,
             Size = new Vector2i(800, 500),
         });
-        
-        Window.Scene = new Scene(new StaticCamera());
-        Window.Scene.AddDrawable(new ColoredTile(new Vector2(0, 0), Color.Aqua));
-        Window.Scene.AddDrawable(new UIFrame(new Vector2(-100, -100))
-        {
-            new Rectangle(new Vector2(-100, -100), new Vector2(50, 50))
-        });
-        
+
         Controllers = new List<GameController>();
         InputFramework = new InputFramework();
         

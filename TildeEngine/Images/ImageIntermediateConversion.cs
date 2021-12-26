@@ -1,4 +1,4 @@
-using System.Drawing;
+using TildeEngine.Graphics;
 
 namespace TildeEngine.Images;
 
@@ -26,7 +26,7 @@ public partial class ImageIntermediate
         var magic = reader.ReadBytes(8);
 
         if (!magic.SequenceEqual(new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 }))
-            return new ImageIntermediate(Array.Empty<Color>()); // TODO: Red question mark upon invalid files
+            return new ImageIntermediate(Array.Empty<ColorArgb>()); // TODO: Red question mark upon invalid files
         
         var chunks = new List<byte[]>();
 

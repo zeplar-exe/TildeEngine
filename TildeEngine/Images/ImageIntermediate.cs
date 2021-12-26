@@ -1,12 +1,12 @@
-using System.Drawing;
+using TildeEngine.Graphics;
 
 namespace TildeEngine.Images;
 
 public partial class ImageIntermediate
 {
-    public Color[] ColorMap;
+    public ColorArgb[] ColorMap;
 
-    public ImageIntermediate(Color[] colorMap)
+    public ImageIntermediate(ColorArgb[] colorMap)
     {
         ColorMap = colorMap;
     }
