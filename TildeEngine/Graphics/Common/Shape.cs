@@ -9,5 +9,5 @@ public abstract class Shape
         Position = position;
     }
 
-    public abstract IEnumerable<Vector2> CreateVertices();
+    public abstract IEnumerable<GraphicsTriangle> CreateTriangles();
 }

@@ -18,7 +18,7 @@ public class FrameCanvasTests
         canvas.DrawShape(new TestLineShape(new Vector2(0, 0)));
         
         Assert.True(canvas.PullVertices().SequenceEqual(
-            new[] { 0f, 0f, 0f, 1f, 0f, 0f })); // (0, 0, 0), (1, 0, 0)
+            new[] { 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 0f })); // (0, 0, 0), (1, 0, 0), (0, 0, 0)
     }
 }
 
@@ -29,9 +29,11 @@ internal class TestLineShape : Shape
         
     }
 
-    public override IEnumerable<Vector2> CreateVertices()
+    public override IEnumerable<GraphicsTriangle> CreateTriangles()
     {
-        yield return new Vector2(0, 0);
-        yield return new Vector2(1, 0);
+        yield return new GraphicsTriangle(
+            new Vector2(0, 0),
+            new Vector2(1, 0),
+            new Vector2(0, 0));
     }
 }

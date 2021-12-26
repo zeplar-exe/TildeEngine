@@ -19,11 +19,12 @@ public class FrameCanvas
 
     public void DrawShape(Shape shape)
     {
-        foreach (var coordinate in shape.CreateVertices())
+        foreach (var triangle in shape.CreateTriangles())
         {
-            AddVertex(coordinate.X / Scale);
-            AddVertex(coordinate.Y / Scale);
-            AddVertex(0); // 2D only, Z axis is unnecessary
+            foreach (var vertex in triangle.CreateVertices())
+            {
+                AddVertex(vertex / Scale);
+            }
         }
     }
 

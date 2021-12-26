@@ -30,6 +30,8 @@ public class AppWindow : GameWindow
         }
     }
 
+    public float DisplayScale = 100f;
+
     internal delegate void SceneChangedHandler(AppWindow window, Scene? old, Scene? @new);
     internal event SceneChangedHandler? SceneChanged;
 
@@ -71,7 +73,7 @@ public class AppWindow : GameWindow
 
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
-        var canvas = new FrameCanvas(100f); // TODO: Make this customizable
+        var canvas = new FrameCanvas(DisplayScale);
 
         foreach (var drawable in Scene.Drawables)
         {
@@ -79,6 +81,8 @@ public class AppWindow : GameWindow
         }
 
         var vertices = canvas.PullVertices().ToArray();
+        Console.WriteLine(string.Join(", ", vertices));
+        Console.WriteLine(vertices.Length);
         
         GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StreamDraw);
         
@@ -87,7 +91,7 @@ public class AppWindow : GameWindow
         
         Shader.Use();
         
-        GL.DrawArrays(PrimitiveType.TriangleFan, 0, 12);
+        GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length / 3);
         
         GL.DisableVertexAttribArray(0);
 
