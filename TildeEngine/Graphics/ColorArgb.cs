@@ -21,7 +21,7 @@ public partial struct ColorArgb
             (1 - Alpha) * backgroundColor.R + Alpha * R,
             (1 - Alpha) * backgroundColor.G + Alpha * G,
             (1 - Alpha) * backgroundColor.B + Alpha * B);
-    }
+    } // Courtesy of https://stackoverflow.com/a/2049362/16324801
 
     public override string ToString()
     {

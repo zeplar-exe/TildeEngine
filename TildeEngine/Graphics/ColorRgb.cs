@@ -55,4 +55,9 @@ public partial struct ColorRgb
     {
         return new ColorArgb(alpha, R, G, B);
     }
+
+    public override string ToString()
+    {
+        return $"{R}, {G}, {B}";
+    }
 }

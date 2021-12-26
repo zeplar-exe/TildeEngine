@@ -34,4 +34,9 @@ public struct ColorHsv
     {
         throw new NotImplementedException();
     } // Will try to adapt https://www.cs.rit.edu/~ncs/color/t_convert.html
+
+    public override string ToString()
+    {
+        return $"{Hue}, {Saturation}, {Value}";
+    }
 }
