@@ -1,4 +1,4 @@
-namespace TildeEngine.ObjectProperties.Animation;
+namespace TildeEngine;
 
 public readonly struct ProgressInfo
 {
