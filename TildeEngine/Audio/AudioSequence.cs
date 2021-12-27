@@ -19,11 +19,27 @@ public class AudioSequence : IEnumerable<AudioClip>
         Clips = clips?.ToList() ?? new List<AudioClip>();
     }
 
+    public void AddClip(AudioClip clip)
+    {
+        Clips.Add(clip);
+        OrderedClips?.Add(clip);
+    }
+
+    public bool RemoveClip(AudioClip clip)
+    {
+        return Clips.Remove(clip) && (OrderedClips?.Remove(clip) ?? false);
+    }
+
     public void Shuffle()
     {
         var random = new Random();
         
-        OrderedClips = Clips.OrderBy(_ => random.Next(0, Clips.Count * random.Next(2, 10))).ToList();
+        Order(c => c.OrderBy(_ => random.Next(0, Clips.Count * random.Next(2, 10))));
+    }
+
+    public void Order(Func<List<AudioClip>, IEnumerable<AudioClip>> sorter)
+    {
+        OrderedClips = sorter.Invoke(Clips).ToList();
     }
 
     public async IAsyncEnumerable<AudioSequenceStatus> StartFrom(int index, [EnumeratorCancellation] CancellationToken token)
