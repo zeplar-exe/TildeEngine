@@ -5,13 +5,9 @@
 >
 > Begins the task asynchronously and stores the CancellationToken
 
-> void Pause()
+> void Pause/Stop()
 >
 > Pauses the task without cancelling it, throws a relevant exception if the operation has not started.
-
-> void Cancel()
->
-> Invokes the CancellationToken which should have been stored internally, throws a relevant exception if the operation has not started.
 
 > async Task Restart(..., CancellationToken token)
 >

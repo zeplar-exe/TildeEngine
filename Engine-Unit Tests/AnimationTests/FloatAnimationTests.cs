@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using TildeEngine.ObjectProperties;
 using TildeEngine.ObjectProperties.Animation;
@@ -15,7 +16,7 @@ public class FloatAnimationTests : AnimationTest
         var animator = new FloatProperty(1f).Animate(10f, new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
         var interpolationValues = CreateProgressHandler(animator);
         
-        animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
+        animator.Start(CancellationToken.None).Wait(TimeSpan.FromSeconds(10));
         
         Assert.True(interpolationValues.SequenceEqual(
             new[] { 1.9f, 2.8f, 3.7f, 4.6f, 5.5f, 6.4f, 7.3f, 8.2f, 9.1f, 10f  } ));
@@ -27,7 +28,7 @@ public class FloatAnimationTests : AnimationTest
         var animator = new FloatProperty(0.5f).Animate(0.5f, new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
         var interpolationValues = CreateProgressHandler(animator);
         
-        animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
+        animator.Start(CancellationToken.None).Wait(TimeSpan.FromSeconds(10));
 
         Assert.True(!interpolationValues.Any());
     }

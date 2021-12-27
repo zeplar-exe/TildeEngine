@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using TildeEngine.ObjectProperties;
 using TildeEngine.ObjectProperties.Animation;
@@ -18,7 +19,7 @@ public class StringAnimationTests : AnimationTest
         var animator = new StringProperty(begin).Animate(end, new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
         var interpolationValues = CreateProgressHandler(animator);
         
-        animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
+        animator.Start(CancellationToken.None).Wait(TimeSpan.FromSeconds(10));
 
         Assert.True(interpolationValues.First() == begin && interpolationValues.Last() == end);
     }
@@ -29,7 +30,7 @@ public class StringAnimationTests : AnimationTest
         var animator = new StringProperty("").Animate("", new AnimationSettings { Length = TimeSpan.FromSeconds(1) });
         var interpolationValues = CreateProgressHandler(animator);
         
-        animator.StartAsync().Wait(TimeSpan.FromSeconds(10));
+        animator.Start(CancellationToken.None).Wait(TimeSpan.FromSeconds(10));
 
         Assert.True(!interpolationValues.Any());
     }

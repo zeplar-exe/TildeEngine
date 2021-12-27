@@ -2,77 +2,67 @@ namespace TildeEngine.ObjectProperties.Animation;
 
 public class Animator<TProperty>
 {
-    private bool IsAnimating { get; set; }
-    
+    private CancellationToken CancellationToken { get; set; }
+
     private int Index { get; set; }
     private ObjectProperty<TProperty> Property { get; }
     private TProperty[] Values { get; }
     private double Interval { get; }
+    
+    public bool IsAnimating { get; private set; }
 
     private IProgress<AnimationStatus<TProperty>> InterfaceProgress => Progress;
     public Progress<AnimationStatus<TProperty>> Progress { get; }
 
     internal Animator(ObjectProperty<TProperty> property, IEnumerable<TProperty> values, double interval)
     {
+        if (values == null) 
+            throw new ArgumentNullException(nameof(values));
+        
         Property = property ?? throw new ArgumentNullException(nameof(property));
-        Values = values?.ToArray() ?? throw new ArgumentNullException(nameof(values));
+        Values = values.ToArray();
         Interval = interval;
 
         Progress = new Progress<AnimationStatus<TProperty>>();
     }
     
     public IEnumerable<TProperty> GetPropertySequence() => Values;
-
-    public void Start()
-    {
-        Restart();
-    }
     
-    public async Task StartAsync()
+    public async Task Start(CancellationToken token)
     {
-        await RestartAsync();
-    }
-
-    public void Pause()
-    {
-        IsAnimating = false;
-    }
-
-    public async void Restart()
-    {
+        if (IsAnimating)
+            throw new InvalidOperationException("The animator has already been started.");
+        
         IsAnimating = true;
-
-        Animate();
-    }
-    
-    public async Task RestartAsync()
-    {
-        IsAnimating = true;
+        CancellationToken = token;
         
         await AnimateAsync();
     }
 
-    private void Animate()
+    public void Stop()
     {
-        for (; Index < Values.LongLength; Index++)
-        {
-            if (!IsAnimating)
-                return;
-            
-            var value = Values[Index];
-                        
-            Property.Value = value;
-            InterfaceProgress.Report(CreateStatus());
+        if (!IsAnimating)
+            throw new InvalidOperationException("The animator has already been stopped or is not animating yet.");
+        
+        IsAnimating = false;
+    }
 
-            Thread.Sleep(TimeSpan.FromSeconds(Interval));
-        }
+    public async Task Restart(CancellationToken token)
+    {
+        if (IsAnimating)
+            throw new InvalidOperationException("The animator has already been started.");
+        
+        Index = 0;
+        IsAnimating = true;
+        
+        await Start(CancellationToken);
     }
 
     private async Task AnimateAsync()
     {
         for (; Index < Values.LongLength; Index++)
         {
-            if (!IsAnimating)
+            if (CancellationToken.IsCancellationRequested)
                 return;
             
             var value = Values[Index];
@@ -80,7 +70,7 @@ public class Animator<TProperty>
             Property.Value = value;
             InterfaceProgress.Report(CreateStatus());
 
-            await Task.Delay(TimeSpan.FromSeconds(Interval));
+            await Task.Delay(TimeSpan.FromSeconds(Interval), CancellationToken);
         }
     }
 
