@@ -30,6 +30,12 @@ public class AudioSequence : IEnumerable<AudioClip>
         return Clips.Remove(clip) && (OrderedClips?.Remove(clip) ?? false);
     }
 
+    public void Clear()
+    {
+        Clips.Clear();
+        OrderedClips?.Clear();
+    }
+
     public void Shuffle()
     {
         var random = new Random();
